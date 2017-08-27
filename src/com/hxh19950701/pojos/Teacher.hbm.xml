@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="Teacher" table="teacher">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="assigned" />
+		</id>
+
+		<property name="teacherId" type="string" length="20" column="teacherId"
+			generated="never" lazy="false" />
+
+		<property name="name" type="string" length="20" column="name"
+			generated="never" lazy="false" />
+
+		<property name="sex" type="int" column="sex" generated="never"
+			lazy="false" />
+
+		<property name="mark" type="string" column="mark" generated="never"
+			lazy="false" />
+			
+		<property name="createTime" type="java.sql.Timestamp"
+			column="createTime" generated="never" lazy="false" />
+			
+		<property name="updateTime" type="java.sql.Timestamp"
+			column="updateTime" generated="never" lazy="false" />
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+		/> <property name="url" value="jdbc:sqlserver://172.28.14.200:1433;databaseName=HHSI" 
+		/> <property name="username" value="sa" /> <property name="password" value="123456" 
+		/> </bean> -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/teachingevaluate" />
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<!-- <prop key="hibernate.show_sql">true</prop> -->
+				<!--<prop key="hibernate.format_sql">true</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingLocations" value="classpath:com/hxh19950701/pojos/*.hbm.xml" />
+	</bean>
+
+	<!-- Transaction -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="serviceMethods"
+			expression="execution(* com.hxh19950701.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+	</aop:config>
+
+
+
+
+	<!-- dao -->
+	<bean name="departmentDao" class="com.hxh19950701.dao.DepartmentDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="userDao" class="com.hxh19950701.dao.UserDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="loginRecordDao" class="com.hxh19950701.dao.LoginRecordDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="studentDao" class="com.hxh19950701.dao.StudentDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="studentCourseInfoDao" class="com.hxh19950701.dao.StudentCourseInfoDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="courseDao" class="com.hxh19950701.dao.CourseDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="teacherDao" class="com.hxh19950701.dao.TeacherDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="evaluateTargetDao" class="com.hxh19950701.dao.EvaluateTargetDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="evaluateDao" class="com.hxh19950701.dao.EvaluateDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="codeDao" class="com.hxh19950701.dao.CodeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="beanDefineConfigue" class="com.hxh19950701.listener.StartupListener">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+
+
+
+	<!-- service -->
+	<bean name="userService" class="com.hxh19950701.service.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean name="courseService" class="com.hxh19950701.service.CourseService">
+		<property name="studentCourseInfoDao" ref="studentCourseInfoDao"></property>
+		<property name="courseDao" ref="courseDao"></property>
+		<property name="studentDao" ref="studentDao"></property>
+		<property name="teacherDao" ref="teacherDao"></property>
+	</bean>
+	<bean name="evaluateService" class="com.hxh19950701.service.EvaluateService">
+		<property name="evaluateTargetDao" ref="evaluateTargetDao"></property>
+		<property name="evaluateDao" ref="evaluateDao"></property>
+		<property name="studentCourseInfoDao" ref="studentCourseInfoDao"></property>
+		<property name="courseDao" ref="courseDao"></property>
+	</bean>
+	<bean name="loginRecordService" class="com.hxh19950701.service.LoginRecordService">
+		<property name="userDao" ref="userDao"></property>
+		<property name="loginRecordDao" ref="loginRecordDao"></property>
+	</bean>
+	<bean name="studentService" class="com.hxh19950701.service.StudentService">
+		<property name="studentDao" ref="studentDao"></property>
+		<property name="departmentDao" ref="departmentDao"></property>
+	</bean>
+	<bean name="teacherService" class="com.hxh19950701.service.TeacherService">
+		<property name="teacherDao" ref="teacherDao"></property>
+	</bean>
+	<bean name="departmentService" class="com.hxh19950701.service.DepartmentService">
+		<property name="departmentDao" ref="departmentDao"></property>
+	</bean>
+	<bean name="codeService" class="com.hxh19950701.service.CodeService">
+		<property name="codeDao" ref="codeDao"></property>
+	</bean>
+
+
+
+
+	<!-- action -->
+	<bean name="departmentManagerAction" class="com.hxh19950701.action.DepartmentManagerAction"
+		scope="prototype">
+		<property name="departmentService" ref="departmentService"></property>
+	</bean>
+	<bean name="userManagerAction" class="com.hxh19950701.action.UserManagerAction"
+		scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="codeService" ref="codeService"></property>
+		<property name="loginRecordService" ref="loginRecordService"></property>
+	</bean>
+	<bean name="studentManagerAction" class="com.hxh19950701.action.StudentManagerAction"
+		scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	<bean name="teacherManagerAction" class="com.hxh19950701.action.TeacherManagerAction"
+		scope="prototype">
+		<property name="codeService" ref="codeService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	<bean name="courseManagerAction" class="com.hxh19950701.action.CourseManagerAction"
+		scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+	</bean>
+	<bean name="evaluateManagerAction" class="com.hxh19950701.action.EvaluateManagerAction"
+		scope="prototype">
+		<property name="evaluateService" ref="evaluateService"></property>
+		<property name="courseService" ref="courseService"></property>
+	</bean>
+
+</beans>

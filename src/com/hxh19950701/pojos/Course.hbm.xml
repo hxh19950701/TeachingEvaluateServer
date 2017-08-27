@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="Course" table="course">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="teacher" column="teacher" class="Teacher"
+			lazy="false" />
+
+		<property name="name" type="string" length="35" column="name"
+			generated="never" lazy="false" />
+			
+		<property name="year" type="int" column="year" generated="never"
+			lazy="false" />
+
+		<property name="term" type="int" column="term" generated="never"
+			lazy="false" />
+
+		<property name="password" type="string" length="35" column="password"
+			generated="never" lazy="false" />
+
+		<property name="score" type="int" column="score" generated="never"
+			lazy="false" />
+
+		<property name="personCount" type="int" column="personCount"
+			generated="never" lazy="false" />
+		
+		<property name="totalPersonCount" type="int" column="totalPersonCount"
+			generated="never" lazy="false" />
+			
+		<property name="evaluatedPersonCount" type="int"
+			column="evaluatedPersonCount" generated="never" lazy="false" />
+			
+		<property name="mark" type="string" column="mark" generated="never"
+			lazy="false" />
+			
+		<property name="createTime" type="java.sql.Timestamp"
+			column="createTime" generated="never" lazy="false" />
+			
+		<property name="updateTime" type="java.sql.Timestamp"
+			column="updateTime" generated="never" lazy="false" />
+
+	</class>
+
+</hibernate-mapping>

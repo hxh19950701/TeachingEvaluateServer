@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd" >
+<struts>
+	<package name="hxh19950701" extends="json-default">
+		<action name="departmentManager" class="departmentManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+		<action name="userManager" class="userManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+		<action name="studentManager" class="studentManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+		<action name="teacherManager" class="teacherManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+		<action name="courseManager" class="courseManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+		<action name="evaluateManager" class="evaluateManagerAction">
+			<result type="json">
+				<param name="root">responseJson</param>
+			</result>
+		</action>
+	</package>
+</struts>

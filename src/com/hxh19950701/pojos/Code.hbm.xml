@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="Code" table="code">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<property name="code" type="string" length="8" column="code"
+			generated="never" lazy="false" />
+			
+		<property name="endTime" type="long" column="endTime"
+			generated="never" lazy="false" />
+	</class>
+
+</hibernate-mapping>

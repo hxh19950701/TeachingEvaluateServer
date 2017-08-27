@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="User" table="user">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<property name="username" type="string" length="20" column="username"
+			generated="never" lazy="false" />
+
+		<property name="password" type="string" length="35" column="password"
+			generated="never" lazy="false" />
+
+		<property name="identity" type="int" column="identity"
+			generated="never" lazy="false" />
+
+		<property name="createType" type="int" column="createType"
+			generated="never" lazy="false" />
+			
+		<property name="enable" type="boolean" column="enable"
+			generated="never" lazy="false" />
+			
+		<property name="mark" type="string" column="mark" generated="never"
+			lazy="false" />
+			
+		<property name="createTime" type="java.sql.Timestamp"
+			column="createTime" generated="never" lazy="false" />
+			
+		<property name="updateTime" type="java.sql.Timestamp"
+			column="updateTime" generated="never" lazy="false" />
+	</class>
+
+</hibernate-mapping>

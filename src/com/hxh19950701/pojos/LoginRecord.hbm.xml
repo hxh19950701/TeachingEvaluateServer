@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="LoginRecord" table="loginRecord">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<property name="ip" type="string" length="20" column="ip"
+			generated="never" lazy="false" />
+
+		<many-to-one name="user" column="user" class="User" lazy="false" />
+
+		<property name="time" type="java.sql.Timestamp" column="time"
+			generated="never" lazy="false" />
+
+	</class>
+
+</hibernate-mapping>

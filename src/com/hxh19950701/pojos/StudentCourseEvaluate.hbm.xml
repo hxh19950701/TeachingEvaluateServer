@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hxh19950701.pojos">
+
+	<class name="StudentCourseEvaluate" table="studentCourseEvaluate">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="info" column="info" class="StudentCourseInfo"
+			lazy="false" />
+		
+		<many-to-one name="item" column="item" class="EvaluateThirdTarget"
+			lazy="false" />
+		
+		<property name="score" type="float" column="score"
+			generated="never" lazy="false" />
+		
+		<property name="mark" type="string" column="mark" generated="never"
+			lazy="false" />
+			
+		<property name="createTime" type="java.sql.Timestamp"
+			column="createTime" generated="never" lazy="false" />
+			
+		<property name="updateTime" type="java.sql.Timestamp"
+			column="updateTime" generated="never" lazy="false" />
+	</class>
+	
+</hibernate-mapping>
